@@ -1,6 +1,5 @@
 from computer import Computer
 from human import Human
-from player import Player
 
 
 class Run:
@@ -71,6 +70,17 @@ class Run:
         else:
             self.compare_results()
             self.round += 1
+
+    def display_round_results(self, winner, winner_choice, loser, loser_choice, word):
+        print(f"{winner}'s {winner_choice} {word} {loser}'s {loser_choice}")
+
+    def rounds(self):
+        try:
+            number = int(input("Enter a number for how many rounds to win\n:"))
+            return number
+        except:
+            print("Need a number")
+            return self.rounds()
 
     def compare_results(self):
         if self.player_one.choice == "rock":
@@ -150,18 +160,3 @@ class Run:
                 else:
                     self.display_round_results(self.player_two.name, self.player_two.choice, self.player_one.name,
                                                self.player_one.choice, "poisons")
-
-    def display_round_results(self, winner, winner_choice, loser, loser_choice, word):
-        print(f"{winner}'s {winner_choice} {word} {loser}'s {loser_choice}")
-
-
-    def rounds(self):
-        try:
-            number = int(input("Enter a number for how many rounds to win\n:"))
-            return number
-        except:
-            print("Need a number")
-            return self.rounds()
-
-
-
