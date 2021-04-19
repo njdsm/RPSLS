@@ -77,6 +77,9 @@ class Run:
     def rounds(self):
         try:
             number = int(input("Enter a number for how many rounds to win\n:"))
+            if number < 2:
+                print("At least 2 rounds please.")
+                return self.rounds()
             return number
         except:
             print("Need a number")
