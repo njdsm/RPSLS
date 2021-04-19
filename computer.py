@@ -4,7 +4,7 @@ import random
 
 class Computer(Player):
     def __init__(self):
-        self.name = "Player Two"
+        self.name = "Computer"
         super().__init__()
 
     def get_gesture(self):
