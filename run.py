@@ -13,14 +13,22 @@ class Run:
         rounds_to_win = self.rounds()
         player_one = Human("Player One")
         player_two = Computer()
-        while player_one.wins < rounds_to_win and player_two.wins < rounds_to_win:
+        while self.player_one.wins < rounds_to_win and self.player_two.wins < rounds_to_win:
             self.player_choice_prompt()
             self.computer_choice()
             self.results()
-            print(self.round)
+        self.display_winner()
+
+    def display_winner(self):
+        if self.player_one.wins > self.player_two.wins:
+            print(f"{self.player_one.name} is the winner!")
+        else:
+            print(f"{self.player_two.name} is the winner!")
 
     def player_choice_prompt(self):
-        self.player_one.choice = self.player_one.gestures[int(input(f"Round {self.round}\n{self.player_one.name}: Make your choice!\n"
+        self.player_one.choice = self.player_one.gestures[int(input(f"Round {self.round}\n"
+                                                                    f"Score: {self.player_one.wins} to {self.player_two.wins}\n"
+                                                                    f"{self.player_one.name}: Make your choice!\n"
               f"1: rock\n"
               f"2. paper\n"
               f"3. scissors\n"
@@ -43,8 +51,87 @@ class Run:
             self.round += 1
 
     def compare_results(self):
-        # TODO compare results to get correct response
-        pass
+        if self.player_one.choice == "rock":
+            if self.player_two.choice == "scissors" or self.player_two.choice == "lizard":
+                self.player_one.wins += 1
+                self.display_round_results(self.player_one.name, self.player_one.choice, self.player_two.name,
+                                           self.player_two.choice, "crushes")
+            else:
+                self.player_two.wins += 1
+                if self.player_two.choice == "paper":
+                    self.display_round_results(self.player_two.name, self.player_two.choice, self.player_one.name,
+                                               self.player_one.choice, "covers")
+                else:
+                    self.display_round_results(self.player_two.name, self.player_two.choice, self.player_one.name,
+                                               self.player_one.choice, "vaporizes")
+        elif self.player_one.choice == "paper":
+            if self.player_two.choice == "rock" or self.player_two.choice == "spock":
+                self.player_one.wins += 1
+                if self.player_two.choice == "rock":
+                    self.display_round_results(self.player_one.name, self.player_one.choice, self.player_two.name,
+                                               self.player_two.choice, "covers")
+                else:
+                    self.display_round_results(self.player_one.name, self.player_one.choice, self.player_two.name,
+                                               self.player_two.choice, "disproves")
+            else:
+                self.player_two.wins += 1
+                if self.player_two.choice == "lizard":
+                    self.display_round_results(self.player_two.name, self.player_two.choice, self.player_one.name,
+                                               self.player_one.choice, "eats")
+                else:
+                    self.display_round_results(self.player_two.name, self.player_two.choice, self.player_one.name,
+                                               self.player_one.choice, "cuts")
+        elif self.player_one.choice == "scissors":
+            if self.player_two.choice == "paper" or self.player_two.choice == "lizard":
+                self.player_one.wins += 1
+                if self.player_two.choice == "paper":
+                    self.display_round_results(self.player_one.name, self.player_one.choice, self.player_two.name,
+                                               self.player_two.choice, "cuts")
+                else:
+                    self.display_round_results(self.player_one.name, self.player_one.choice, self.player_two.name,
+                                               self.player_two.choice, "decapitate")
+            else:
+                self.player_two.wins += 1
+                self.display_round_results(self.player_two.name, self.player_two.choice, self.player_one.name,
+                                           self.player_one.choice, "smashes")
+        elif self.player_one.choice == "lizard":
+            if self.player_two.choice == "spock" or self.player_two.choice == "paper":
+                self.player_one.wins += 1
+                if self.player_two.choice == "spock":
+                    self.display_round_results(self.player_one.name, self.player_one.choice, self.player_two.name,
+                                               self.player_two.choice, "poisons")
+                else:
+                    self.display_round_results(self.player_one.name, self.player_one.choice, self.player_two.name,
+                                               self.player_two.choice, "eats")
+            else:
+                self.player_two.wins += 1
+                if self.player_two.choice == "rock":
+                    self.display_round_results(self.player_two.name, self.player_two.choice, self.player_one.name,
+                                               self.player_one.choice, "smashes")
+                else:
+                    self.display_round_results(self.player_two.name, self.player_two.choice, self.player_one.name,
+                                               self.player_one.choice, "decapitate")
+        elif self.player_one.choice == "spock":
+            if self.player_two.choice == "scissors" or self.player_two.choice == "rock":
+                self.player_one.wins += 1
+                if self.player_two.choice == "scissors":
+                    self.display_round_results(self.player_one.name, self.player_one.choice, self.player_two.name,
+                                               self.player_two.choice, "smashes")
+                else:
+                    self.display_round_results(self.player_one.name, self.player_one.choice, self.player_two.name,
+                                               self.player_two.choice, "vaporizes")
+            else:
+                self.player_two.wins += 1
+                if self.player_two.choice == "paper":
+                    self.display_round_results(self.player_two.name, self.player_two.choice, self.player_one.name,
+                                               self.player_one.choice, "disproves")
+                else:
+                    self.display_round_results(self.player_two.name, self.player_two.choice, self.player_one.name,
+                                               self.player_one.choice, "poisons")
+
+    def display_round_results(self, winner, winner_choice, loser, loser_choice, word):
+        print(f"{winner}'s {winner_choice} {word} {loser}'s {loser_choice}")
+
 
     def rounds(self):
         try:
