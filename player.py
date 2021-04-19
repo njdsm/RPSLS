@@ -3,5 +3,6 @@
 class Player:
 
     def __init__(self):
-        self.gesture = ""
+        self.gestures = ["rock", "paper", "scissors", "lizard", "spock"]
+        self.choice = ""
         self.wins = 0
