@@ -53,6 +53,7 @@ class Run:
             f"4. lizard\n"
             f"5. spock\n"
             f":")) - 1]
+            assert player_turn.choice >= 1
         except:
             print("Pick a number 1 - 5 please.")
             self.player_choice_prompt(player_turn)
