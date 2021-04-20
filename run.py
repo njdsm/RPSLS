@@ -37,30 +37,34 @@ class Run:
             print("Pick 1 or 2")
             return self.multiplayer()
 
-    def display_winner(self):
-        if self.player_one.wins > self.player_two.wins:
-            print(f"{self.player_one.name} is the winner!")
-        else:
-            print(f"{self.player_two.name} is the winner!")
+    def rounds(self):
+        try:
+            number = int(input("Enter a number for how many rounds to win\n:"))
+            if number < 2:
+                print("At least 2 rounds please.")
+                return self.rounds()
+            return number
+        except:
+            print("Need a number")
+            return self.rounds()
 
     def player_choice_prompt(self, player_turn):
         try:
             user_input = int(input(f"Round {self.round}\n"
-            f"Score: {self.player_one.wins} to {self.player_two.wins}\n"
-            f"{player_turn.name}: Make your choice!\n"
-            f"1: rock\n"
-            f"2. paper\n"
-            f"3. scissors\n"
-            f"4. lizard\n"
-            f"5. spock\n"
-            f":")) - 1
+                                   f"Score: {self.player_one.wins} to {self.player_two.wins}\n"
+                                   f"{player_turn.name}: Make your choice!\n"
+                                   f"1: rock\n"
+                                   f"2. paper\n"
+                                   f"3. scissors\n"
+                                   f"4. lizard\n"
+                                   f"5. spock\n"
+                                   f":")) - 1
             player_turn.choice = player_turn.gestures[user_input]
             assert user_input >= 0
         except:
             print("Pick a number 1 - 5 please.")
             self.player_choice_prompt(player_turn)
         print("\n" * 100)
-
 
     def computer_choice(self):
         self.player_two.get_gesture()
@@ -73,20 +77,6 @@ class Run:
         else:
             self.compare_result_improved()
             self.round += 1
-
-    def display_round_results(self, winner, winner_choice, loser, loser_choice, word):
-        print(f"{winner}'s {winner_choice} {word} {loser}'s {loser_choice}")
-
-    def rounds(self):
-        try:
-            number = int(input("Enter a number for how many rounds to win\n:"))
-            if number < 2:
-                print("At least 2 rounds please.")
-                return self.rounds()
-            return number
-        except:
-            print("Need a number")
-            return self.rounds()
 
     # new stuff after mvp
     def compare_result_improved(self):
@@ -102,3 +92,12 @@ class Run:
             word = gesture_two.result(self.player_two.choice, self.player_one.choice)
             self.display_round_results(self.player_two.name, self.player_two.choice, self.player_one.name,
                                        self.player_one.choice, word)
+
+    def display_round_results(self, winner, winner_choice, loser, loser_choice, word):
+        print(f"{winner}'s {winner_choice} {word} {loser}'s {loser_choice}")
+
+    def display_winner(self):
+        if self.player_one.wins > self.player_two.wins:
+            print(f"{self.player_one.name} is the winner!")
+        else:
+            print(f"{self.player_two.name} is the winner!")
